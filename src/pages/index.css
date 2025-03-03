@@ -1,0 +1,17 @@
+.header {
+  height: 15vh;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+.todo-wrapper {
+  width: 100%;
+}
+
+.todo-list {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
