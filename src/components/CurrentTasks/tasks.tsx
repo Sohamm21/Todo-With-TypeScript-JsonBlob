@@ -26,23 +26,19 @@ const Tasks = ({ tasks, setTasks, currentTask }: TaskProps): JSX.Element => {
 
     const today = new Date().toISOString().split("T")[0];
 
-    if (pendingTasks?.length) {      
+    if (pendingTasks?.length) {
       if (currentTask === "today") {
-        return pendingTasks.filter(
-          (task) => task?.deadline === today
-        );
+        return pendingTasks.filter((task) => task?.deadline === today);
       } else if (currentTask === "upcoming") {
-        return pendingTasks.filter(
-          (task) => task?.deadline > today
-        );
+        return pendingTasks.filter((task) => task?.deadline > today);
       } else if (currentTask === "overdue") {
-        return pendingTasks.filter(
-          (task) => task?.deadline < today
-        );
+        return pendingTasks.filter((task) => task?.deadline < today);
       }
     }
     return [];
   }, [tasks, currentTask]);
+
+  const completedTasks = tasks?.filter((task) => task.status === "completed");
 
   const saveTasksToAPI = async (updatedTasks: TaskData[]) => {
     const response = await fetch(
@@ -64,16 +60,12 @@ const Tasks = ({ tasks, setTasks, currentTask }: TaskProps): JSX.Element => {
   ): Promise<void> => {
     try {
       let updatedTasks: TaskData[];
-      
+
       if (taskToEdit) {
-        // Edit existing task
-        updatedTasks = tasks.map(task => 
-          task.id === taskToEdit.id 
-            ? { ...task, ...taskData }
-            : task
+        updatedTasks = tasks.map((task) =>
+          task.id === taskToEdit.id ? { ...task, ...taskData } : task
         );
       } else {
-        // Create new task
         const newTask: TaskData = {
           ...taskData,
           id: crypto.randomUUID(),
@@ -103,8 +95,8 @@ const Tasks = ({ tasks, setTasks, currentTask }: TaskProps): JSX.Element => {
   return (
     <div className="w-full">
       {showModal && (
-        <TasksModal 
-          onModalClose={onModalClose} 
+        <TasksModal
+          onModalClose={onModalClose}
           onSave={handleOnClickSave}
           taskToEdit={taskToEdit}
         />
@@ -120,20 +112,38 @@ const Tasks = ({ tasks, setTasks, currentTask }: TaskProps): JSX.Element => {
         </button>
       </div>
 
-      <div className="bg-white mt-5 p-5 text-black w-full h-[500px] rounded-md">
+      <div className="bg-white mt-5 p-5 text-black w-full rounded-md flex flex-col gap-5 mb-10">
         {tasksToShow.length ? (
-          <TaskList 
-            tasksToShow={tasksToShow} 
-            priorityColors={priorityColors} 
-            tasks={tasks} 
+          <TaskList
+            tasksToShow={tasksToShow}
+            priorityColors={priorityColors}
+            tasks={tasks}
             setTasks={setTasks}
             onEditTask={handleEditTask}
           />
         ) : (
-          <div className="border border-gray-300 text-sm text-gray-500 h-full flex items-center justify-center rounded-md">
+          <div className="border border-gray-300 text-sm text-gray-500 h-[370px] flex items-center justify-center rounded-md">
             No data to display
           </div>
         )}
+
+        <>
+          <div className="font-bold text-lg mt-5">Completed</div>
+          {completedTasks.length ? (
+            <TaskList
+              tasksToShow={completedTasks}
+              priorityColors={priorityColors}
+              tasks={tasks}
+              setTasks={setTasks}
+              onEditTask={handleEditTask}
+              isCompletedTasks={true}
+            />
+          ) : (
+            <div className="border border-gray-300 text-sm text-gray-500 h-[370px] flex items-center justify-center rounded-md">
+              No data to display
+            </div>
+          )}
+        </>
       </div>
     </div>
   );

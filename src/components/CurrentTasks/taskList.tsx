@@ -7,9 +7,10 @@ interface TaskListProps {
   setTasks: (tasksToShow: TaskData[]) => void;
   tasks: TaskData[];
   onEditTask: (task: TaskData) => void;
+  isCompletedTasks?: boolean;
 }
 
-const TaskList = ({ tasksToShow, priorityColors, tasks, setTasks, onEditTask }: TaskListProps) => {
+const TaskList = ({ tasksToShow, priorityColors, tasks, setTasks, onEditTask, isCompletedTasks }: TaskListProps) => {
   if (!tasksToShow?.length) return null;
 
   const handleTaskStatus = async (taskToUpdate: TaskData) => {
@@ -44,20 +45,21 @@ const TaskList = ({ tasksToShow, priorityColors, tasks, setTasks, onEditTask }: 
   };
 
   return (
-    <div className="border border-gray-300 h-full rounded-md overflow-y-auto shadow-[inset_0px_4px_6px_rgba(0,0,0,0.1),inset_0px_-4px_6px_rgba(0,0,0,0.1)]">
+    <div className="border border-gray-300 h-[370px] rounded-md overflow-y-auto shadow-[inset_0px_4px_6px_rgba(0,0,0,0.1),inset_0px_-4px_6px_rgba(0,0,0,0.1)]">
       {tasksToShow.map((task) => (
         <div
           key={task.id}
-          className="task h-17 m-1 p-2 flex items-center justify-between gap-4 shadow-sm border border-gray-300 rounded-md hover:bg-gray-100"
+          className={`task h-17 m-1 p-2 flex items-center justify-between gap-4 shadow-sm border border-gray-300 rounded-md hover:bg-gray-100 ${isCompletedTasks ? "bg-gray-100/50" : ""}`}
         >
           <div className="flex items-center gap-2">
             <input
               type="checkbox"
               onChange={() => handleTaskStatus(task)}
               className="w-4 h-4 cursor-pointer"
+              checked={task.status === "completed"}
             />
           </div>
-          <div className="flex-2 truncate font-semibold">{task.title}</div>
+          <div className={`flex-2 truncate font-semibold ${isCompletedTasks ? "line-through" : ""}`}>{task.title}</div>
           <div className="flex-1 truncate flex flex-row items-center">
             <Clock className="mr-1 text-gray-500" size={18} />
             {new Date(task.deadline).toDateString()}
