@@ -14,31 +14,33 @@ interface TaskProps {
 const Tasks = ({ tasks, setTasks, currentTask }: TaskProps): JSX.Element => {
   const [showModal, setShowModal] = useState(false);
   const [taskToEdit, setTaskToEdit] = useState<TaskData | undefined>(undefined);
+  const [error, setError] = useState(false);
 
   const onModalClose = (): void => {
     setShowModal(false);
+    setError(false);
     setTaskToEdit(undefined);
   };
 
   const tasksToShow = useMemo(() => {
-    const pendingTasks =
-      tasks?.filter((task) => task.status === "pending") || [];
-
+    if (!Array.isArray(tasks)) return [];
+    
+    const pendingTasks = tasks.filter((task) => task.status === "pending");
     const today = new Date().toISOString().split("T")[0];
 
-    if (pendingTasks?.length) {
+    if (pendingTasks.length) {
       if (currentTask === "today") {
-        return pendingTasks.filter((task) => task?.deadline === today);
+        return pendingTasks.filter((task) => task.deadline === today);
       } else if (currentTask === "upcoming") {
-        return pendingTasks.filter((task) => task?.deadline > today);
+        return pendingTasks.filter((task) => task.deadline > today);
       } else if (currentTask === "overdue") {
-        return pendingTasks.filter((task) => task?.deadline < today);
+        return pendingTasks.filter((task) => task.deadline < today);
       }
     }
     return [];
   }, [tasks, currentTask]);
 
-  const completedTasks = tasks?.filter((task) => task.status === "completed");
+  const completedTasks = Array.isArray(tasks) ? tasks.filter((task) => task.status === "completed") : [];
 
   const saveTasksToAPI = async (updatedTasks: TaskData[]) => {
     const response = await fetch(
@@ -60,6 +62,11 @@ const Tasks = ({ tasks, setTasks, currentTask }: TaskProps): JSX.Element => {
   ): Promise<void> => {
     try {
       let updatedTasks: TaskData[];
+      
+      if (!taskData.title) {
+        setError(true);
+        return;
+      };
 
       if (taskToEdit) {
         updatedTasks = tasks.map((task) =>
@@ -75,6 +82,7 @@ const Tasks = ({ tasks, setTasks, currentTask }: TaskProps): JSX.Element => {
       }
 
       await saveTasksToAPI(updatedTasks);
+      setShowModal(false);
       setTasks(updatedTasks);
     } catch (error) {
       console.error("Error saving task:", error);
@@ -99,6 +107,7 @@ const Tasks = ({ tasks, setTasks, currentTask }: TaskProps): JSX.Element => {
           onModalClose={onModalClose}
           onSave={handleOnClickSave}
           taskToEdit={taskToEdit}
+          error={error}
         />
       )}
 

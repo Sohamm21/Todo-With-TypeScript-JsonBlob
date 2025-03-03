@@ -45,7 +45,7 @@ const TaskList = ({ tasksToShow, priorityColors, tasks, setTasks, onEditTask, is
   };
 
   return (
-    <div className="border border-gray-300 h-[370px] rounded-md overflow-y-auto shadow-[inset_0px_4px_6px_rgba(0,0,0,0.1),inset_0px_-4px_6px_rgba(0,0,0,0.1)]">
+    <div className="border border-gray-300 h-[365px] rounded-md overflow-y-auto shadow-[inset_0px_4px_6px_rgba(0,0,0,0.1),inset_0px_-4px_6px_rgba(0,0,0,0.1)]">
       {tasksToShow.map((task) => (
         <div
           key={task.id}
@@ -60,13 +60,13 @@ const TaskList = ({ tasksToShow, priorityColors, tasks, setTasks, onEditTask, is
             />
           </div>
           <div className={`flex-2 truncate font-semibold ${isCompletedTasks ? "line-through" : ""}`}>{task.title}</div>
-          <div className="flex-1 truncate flex flex-row items-center">
+          <div className="sm:flex-1 truncate flex flex-row items-center">
             <Clock className="mr-1 text-gray-500" size={18} />
             {new Date(task.deadline).toDateString()}
           </div>
-          <div className="text-end flex flex-row items-center gap-5">
+          <div className="text-end flex flex-row items-center gap-2 ml-5 sm:gap-5 sm:ml-0">
             <Pencil
-              className="mr-1 text-gray-500 cursor-pointer hover:text-gray-600 hover:scale-105"
+              className="sm:mr-1 text-gray-500 cursor-pointer hover:text-gray-600 hover:scale-105"
               size={18}
               onClick={() => handleEditTask(task)}
             />

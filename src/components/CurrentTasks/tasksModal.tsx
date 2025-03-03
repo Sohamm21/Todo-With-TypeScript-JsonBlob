@@ -29,14 +29,15 @@ interface TasksModalProps {
     deadline: string;
     description: string;
   }) => void;
+  error: boolean;
   taskToEdit?: TaskData;
 }
 
-const TasksModal = ({ onModalClose, onSave, taskToEdit }: TasksModalProps): JSX.Element => {
+const TasksModal = ({ onModalClose, onSave, taskToEdit, error }: TasksModalProps): JSX.Element => {
   const [formData, setFormData] = useState({
     title: "",
     priority: "none",
-    deadline: "",
+    deadline: new Date().toISOString().split("T")[0],
     description: "",
   });
 
@@ -76,9 +77,10 @@ const TasksModal = ({ onModalClose, onSave, taskToEdit }: TasksModalProps): JSX.
             value={formData.title}
             onChange={handleInputChange}
             placeholder="Add a task title"
-            className="w-full border border-gray-300 rounded-sm h-7 pl-[5px] mb-4"
+            className="w-full border border-gray-300 rounded-sm h-7 pl-[5px]"
           />
-          <div className="flex flex-row w-full justify-between gap-5">
+          {error && (<span className="text-red-500 text-xs">Title is required</span>)}
+          <div className="flex flex-row w-full justify-between gap-5 mt-4">
             <div className="flex flex-col w-1/2">
               <label htmlFor="priority" className="mb-1">
                 Priority
@@ -146,7 +148,6 @@ const TasksModal = ({ onModalClose, onSave, taskToEdit }: TasksModalProps): JSX.
             className="bg-[#646cff] rounded-md px-3 py-2 hover:bg-[#535bf2] font-semibold cursor-pointer"
             onClick={() => {
               onSave(formData);
-              onModalClose();
             }}
           >
             Save
