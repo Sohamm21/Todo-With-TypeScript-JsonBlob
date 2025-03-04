@@ -1,6 +1,7 @@
 import Modal from "./modal";
 import { useState, useEffect } from "react";
 import { TaskData } from "../../types";
+import { CircularProgress } from "@mui/material";
 
 const PRIORITY_OPTIONS: { label: string; value: string }[] = [
   {
@@ -31,9 +32,10 @@ interface TasksModalProps {
   }) => void;
   error: boolean;
   taskToEdit?: TaskData;
+  isLoading: boolean;
 }
 
-const TasksModal = ({ onModalClose, onSave, taskToEdit, error }: TasksModalProps): JSX.Element => {
+const TasksModal = ({ onModalClose, onSave, taskToEdit, error, isLoading }: TasksModalProps): JSX.Element => {
   const [formData, setFormData] = useState({
     title: "",
     priority: "none",
@@ -139,18 +141,20 @@ const TasksModal = ({ onModalClose, onSave, taskToEdit, error }: TasksModalProps
       <Modal.Footer>
         <div className="flex flex-row justify-end gap-2">
           <button
-            className="bg-white text-[#646cff] rounded-md px-3 py-2 hover:text-[#535bf2] font-semibold cursor-pointer border border-[#646cff] hover:border-[#535bf2]"
+            className="bg-white text-[#646cff] rounded-md px-3 py-2 hover:text-[#535bf2] font-semibold cursor-pointer border border-[#646cff] hover:border-[#535bf2] disabled:opacity-50 disabled:cursor-not-allowed"
             onClick={onModalClose}
+            disabled={isLoading}
           >
             Cancel
           </button>
           <button
-            className="bg-[#646cff] rounded-md px-3 py-2 hover:bg-[#535bf2] font-semibold cursor-pointer"
+            className="bg-[#646cff] rounded-md px-3 py-2 w-15 justify-center text-white hover:bg-[#535bf2] font-semibold cursor-pointer flex items-center gap-1 disabled:opacity-50 disabled:cursor-not-allowed"
             onClick={() => {
               onSave(formData);
             }}
+            disabled={isLoading}
           >
-            Save
+            {isLoading ? <CircularProgress color="inherit" thickness={5} size={15} /> : "Save"}
           </button>
         </div>
       </Modal.Footer>
@@ -159,7 +163,7 @@ const TasksModal = ({ onModalClose, onSave, taskToEdit, error }: TasksModalProps
 
   const renderModal = (): JSX.Element => {
     return (
-      <Modal onModalClose={onModalClose}>
+      <Modal onModalClose={onModalClose} disableModalClose={isLoading}>
         <Modal.Header>
           <h2 className="text-black mt-2">Task Details</h2>
         </Modal.Header>

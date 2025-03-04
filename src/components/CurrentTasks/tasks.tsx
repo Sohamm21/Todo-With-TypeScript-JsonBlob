@@ -15,6 +15,7 @@ const Tasks = ({ tasks, setTasks, currentTask }: TaskProps): JSX.Element => {
   const [showModal, setShowModal] = useState(false);
   const [taskToEdit, setTaskToEdit] = useState<TaskData | undefined>(undefined);
   const [error, setError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const onModalClose = (): void => {
     setShowModal(false);
@@ -68,6 +69,7 @@ const Tasks = ({ tasks, setTasks, currentTask }: TaskProps): JSX.Element => {
         return;
       };
 
+      setIsLoading(true);
       if (taskToEdit) {
         updatedTasks = tasks.map((task) =>
           task.id === taskToEdit.id ? { ...task, ...taskData } : task
@@ -82,6 +84,7 @@ const Tasks = ({ tasks, setTasks, currentTask }: TaskProps): JSX.Element => {
       }
 
       await saveTasksToAPI(updatedTasks);
+      setIsLoading(false);
       setShowModal(false);
       setTasks(updatedTasks);
     } catch (error) {
@@ -106,6 +109,7 @@ const Tasks = ({ tasks, setTasks, currentTask }: TaskProps): JSX.Element => {
         <TasksModal
           onModalClose={onModalClose}
           onSave={handleOnClickSave}
+          isLoading={isLoading}
           taskToEdit={taskToEdit}
           error={error}
         />
