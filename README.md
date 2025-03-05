@@ -14,8 +14,6 @@ A modern, responsive todo application built with TypeScript, React, and Tailwind
 - Type-safe development with TypeScript
 - Persistent data storage using JSONBlob
 
-// ... existing code ...
-
 ## Tech Stack
 
 - React 18
@@ -35,3 +33,5 @@ This application uses JSONBlob as a simple data persistence solution. JSONBlob p
 - Data persistence between sessions
 - No backend setup required
 - Simple API integration
+
+[Link to the Project](https://todo-jsonblob.netlify.app/)
