@@ -49,10 +49,12 @@ const TaskList = ({ tasksToShow, priorityColors, tasks, setTasks, onEditTask, is
       {tasksToShow.map((task) => (
         <div
           key={task.id}
+          data-testid="task-container"
           className={`task h-17 m-1 p-2 flex items-center justify-between gap-4 shadow-sm border border-gray-300 rounded-md hover:bg-gray-100 ${isCompletedTasks ? "bg-gray-100/50" : ""}`}
         >
           <div className="flex items-center gap-2">
             <input
+              data-testid="task-status"
               type="checkbox"
               onChange={() => handleTaskStatus(task)}
               className="w-4 h-4 cursor-pointer"
@@ -66,11 +68,13 @@ const TaskList = ({ tasksToShow, priorityColors, tasks, setTasks, onEditTask, is
           </div>
           <div className="text-end flex flex-row items-center gap-2 ml-5 sm:gap-5 sm:ml-0">
             <Pencil
+              data-testid="edit-task"
               className="sm:mr-1 text-gray-500 cursor-pointer hover:text-gray-600 hover:scale-105"
               size={18}
               onClick={() => handleEditTask(task)}
             />
             <div
+              data-testid="priority-indicator"
               className={`w-6 h-8 rounded-sm inset-shadow-xs inset-shadow-yellow-600 ${
                 priorityColors[task.priority] || "bg-gray-500"
               }`}
