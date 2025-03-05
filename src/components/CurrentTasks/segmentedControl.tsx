@@ -18,7 +18,7 @@ const SegmentedControl = ({
       {tabs.map((tab) => (
         <div
           key={tab?.value}
-          className={`segment rounded-md p-[10px] ${
+          className={`segment rounded-md p-[10px] w-full ${
             tab?.value === currentTask ? "active drop-shadow-md" : ""
           }`}
         >
