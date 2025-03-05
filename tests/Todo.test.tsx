@@ -102,8 +102,8 @@ describe("TaskList Component", () => {
       />
     );
   
-    const editButtons = screen.getAllByTestId("edit-task"); // Get all edit buttons
-    fireEvent.click(editButtons[0]); // Click the first edit button
+    const editButtons = screen.getAllByTestId("edit-task");
+    fireEvent.click(editButtons[0]);
   
     expect(mockOnEditTask).toHaveBeenCalled();
   });  

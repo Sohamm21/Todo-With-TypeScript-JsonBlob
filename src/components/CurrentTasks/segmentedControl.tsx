@@ -14,7 +14,7 @@ const SegmentedControl = ({
   name,
 }: SegmentedControlProps): JSX.Element => {
   return (
-    <div className="segmented-control inset-shadow-sm inset-shadow-gray-500/70 rounded-lg">
+    <div className="segmented-control inset-shadow-sm inset-shadow-gray-500/70 rounded-lg w-full sm:w-auto">
       {tabs.map((tab) => (
         <div
           key={tab?.value}
