@@ -125,7 +125,7 @@ const Tasks = ({ tasks, setTasks, currentTask }: TaskProps): JSX.Element => {
         </button>
       </div>
 
-      <div className="bg-white mt-5 p-5 text-black w-full rounded-md flex flex-col gap-5 mb-10">
+      <div className="bg-white mt-5 p-5 text-black w-full rounded-md flex flex-col gap-5 mb-3">
         {tasksToShow.length ? (
           <TaskList
             tasksToShow={tasksToShow}
