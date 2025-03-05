@@ -62,7 +62,7 @@ const TaskList = ({ tasksToShow, priorityColors, tasks, setTasks, onEditTask, is
             />
           </div>
           <div className={`flex-2 truncate font-semibold ${isCompletedTasks ? "line-through" : ""}`}>{task.title}</div>
-          <div className="sm:flex-1 truncate flex flex-row items-center">
+          <div className="hidden sm:flex sm:flex-1 truncate flex-row items-center">
             <Clock className="mr-1 text-gray-500" size={18} />
             {new Date(task.deadline).toDateString()}
           </div>
