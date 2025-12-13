@@ -99,8 +99,8 @@ const Tasks = ({ tasks, setTasks, currentTask }: TaskProps): JSX.Element => {
 
   const priorityColors: Record<string, string> = {
     high: "bg-red-500",
-    medium: "bg-orange-400",
-    low: "bg-yellow-500",
+    medium: "bg-yellow-500",
+    low: "bg-green-500",
   };
 
   return (
