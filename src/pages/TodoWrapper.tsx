@@ -1,14 +1,7 @@
 import { useEffect, useState } from "react";
 import CurrentTasks from "../components/CurrentTasks";
 import "./index.css";
-
-interface TaskData {
-  id: string;
-  title: string;
-  priority: string;
-  deadline: string;
-  description: string;
-}
+import { TaskData } from "../types";
 
 const TodoWrapper = () => {
   const [tasks, setTasks] = useState<TaskData[]>([]);
