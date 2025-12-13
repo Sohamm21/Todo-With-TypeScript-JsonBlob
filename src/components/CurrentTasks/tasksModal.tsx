@@ -36,10 +36,13 @@ interface TasksModalProps {
 }
 
 const TasksModal = ({ onModalClose, onSave, taskToEdit, error, isLoading }: TasksModalProps): JSX.Element => {
+  const date = new Date();
+  const today = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+
   const [formData, setFormData] = useState({
     title: "",
     priority: "none",
-    deadline: new Date().toISOString().split("T")[0],
+    deadline: today,
     description: "",
   });
 
