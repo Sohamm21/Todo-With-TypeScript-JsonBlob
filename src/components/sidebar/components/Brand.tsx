@@ -8,9 +8,10 @@ import { HSeparator } from 'components/separator/Separator';
 export function SidebarBrand() {
 	//   Chakra color mode
 	let logoColor = useColorModeValue('navy.700', 'white');
+	let brandBg = useColorModeValue('gray.100', 'navy.900');
 
 	return (
-		<Flex alignItems='center' flexDirection='column'>
+		<Flex alignItems='center' flexDirection='column' bg={brandBg}>
 			<HorizonLogo h='26px' w='175px' my='32px' color={logoColor} />
 			<HSeparator mb='20px' />
 		</Flex>
