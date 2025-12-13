@@ -45,9 +45,8 @@ const Tasks = ({ tasks, setTasks, currentTask }: TaskProps): JSX.Element => {
 
   const saveTasksToAPI = async (updatedTasks: TaskData[]) => {
     const response = await fetch(
-      "https://jsonblob.com/api/jsonBlob/1345963441663434752",
-      {
-        method: "PUT",
+      "https://jsonblob.com/api/jsonBlob/019b1816-1c18-74f4-9601-4a7393a1770a",
+      {n        method: "PUT",
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",
