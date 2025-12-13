@@ -27,7 +27,8 @@ const Tasks = ({ tasks, setTasks, currentTask }: TaskProps): JSX.Element => {
     if (!Array.isArray(tasks)) return [];
     
     const pendingTasks = tasks.filter((task) => task.status === "pending");
-    const today = new Date().toISOString().split("T")[0];
+    const date = new Date();
+    const today = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
 
     if (pendingTasks.length) {
       if (currentTask === "today") {
