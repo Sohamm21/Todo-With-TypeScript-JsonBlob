@@ -141,7 +141,7 @@ const Tasks = ({ tasks, setTasks, currentTask }: TaskProps): JSX.Element => {
         )}
 
         <>
-          <div className="font-bold text-lg mt-5">Completed</div>
+          <div className="font-bold text-lg mt-5">Completed Tasks</div>
           {completedTasks.length ? (
             <TaskList
               tasksToShow={completedTasks}
