@@ -1,5 +1,6 @@
 import { Clock, Pencil, Trash2 } from "lucide-react";
 import { TaskData } from "../../types";
+import { saveTasks } from "../../services/todoService";
 
 interface TaskListProps {
   tasksToShow: TaskData[];
@@ -22,18 +23,7 @@ const TaskList = ({ tasksToShow, priorityColors, tasks, setTasks, onEditTask, on
           : task
       );
       
-      const response = await fetch(
-        "https://api.jsonblob.com/019b1816-1c18-74f4-9601-4a7393a1770a",
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-          },
-          body: JSON.stringify(updatedTasks),
-        }
-      );
-      if (!response.ok) throw new Error("Failed to save task");
+      await saveTasks(updatedTasks);
       
       setTasks(updatedTasks);
     } catch (error) {

@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import "./index.css";
 import TasksModal from "./tasksModal";
 import { TaskData } from "../../types";
+import { saveTasks } from "../../services/todoService";
 
 import TaskList from "./taskList";
 
@@ -43,21 +44,6 @@ const Tasks = ({ tasks, setTasks, currentTask }: TaskProps): JSX.Element => {
 
   const completedTasks = Array.isArray(tasks) ? tasks.filter((task) => task.status === "completed") : [];
 
-  const saveTasksToAPI = async (updatedTasks: TaskData[]) => {
-    const response = await fetch(
-      "https://api.jsonblob.com/019b1816-1c18-74f4-9601-4a7393a1770a",
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-        body: JSON.stringify(updatedTasks),
-      }
-    );
-    if (!response.ok) throw new Error("Failed to save task");
-  };
-
   const handleOnClickSave = async (
     taskData: Omit<TaskData, "id" | "status">
   ): Promise<void> => {
@@ -83,7 +69,7 @@ const Tasks = ({ tasks, setTasks, currentTask }: TaskProps): JSX.Element => {
         updatedTasks = [...tasks, newTask];
       }
 
-      await saveTasksToAPI(updatedTasks);
+      await saveTasks(updatedTasks);
       setIsLoading(false);
       setShowModal(false);
       setTasks(updatedTasks);
@@ -101,7 +87,7 @@ const Tasks = ({ tasks, setTasks, currentTask }: TaskProps): JSX.Element => {
     try {
       setIsLoading(true);
       const updatedTasks = tasks.filter((task) => task.id !== taskId);
-      await saveTasksToAPI(updatedTasks);
+      await saveTasks(updatedTasks);
       setTasks(updatedTasks);
     } catch (error) {
       console.error("Error deleting task:", error);
