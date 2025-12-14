@@ -117,7 +117,7 @@ const Tasks = ({ tasks, setTasks, currentTask }: TaskProps): JSX.Element => {
       <div className="tasks-header flex justify-between items-center">
         <h2>Tasks</h2>
         <button
-          className="bg-[#646cff] rounded-md px-3 py-2 hover:bg-[#535bf2] font-semibold cursor-pointer"
+          className="bg-green-500 rounded-md px-3 py-2 hover:bg-green-600 font-semibold cursor-pointer"
           onClick={() => setShowModal((prev) => !prev)}
         >
           + Add Task
