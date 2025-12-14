@@ -1,34 +1,23 @@
 import { useEffect, useState } from "react";
 import CurrentTasks from "../components/CurrentTasks";
+import { fetchTasks } from "../services/todoService";
+import { TaskData } from "../types";
 import "./index.css";
-
-interface TaskData {
-  id: string;
-  title: string;
-  priority: string;
-  deadline: string;
-  description: string;
-}
 
 const TodoWrapper = () => {
   const [tasks, setTasks] = useState<TaskData[]>([]);
   
-  const fetchTasks = async () => {
+  const loadTasks = async () => {
     try {
-      const response = await fetch(
-        "https://api.jsonblob.com/019b1816-1c18-74f4-9601-4a7393a1770a"
-      );
-      if (response.ok) {
-        const data = await response.json();
-        Array.isArray(data) && setTasks(data);
-      }
+      const data = await fetchTasks();
+      setTasks(data);
     } catch (error) {
       console.error("Error fetching tasks:", error);
     }
   };
 
   useEffect(() => {
-    fetchTasks();
+    loadTasks();
   }, []);
 
   return (
