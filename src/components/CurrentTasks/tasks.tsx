@@ -97,6 +97,19 @@ const Tasks = ({ tasks, setTasks, currentTask }: TaskProps): JSX.Element => {
     setShowModal(true);
   };
 
+  const handleDeleteTask = async (taskId: string) => {
+    try {
+      setIsLoading(true);
+      const updatedTasks = tasks.filter((task) => task.id !== taskId);
+      await saveTasksToAPI(updatedTasks);
+      setTasks(updatedTasks);
+    } catch (error) {
+      console.error("Error deleting task:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const priorityColors: Record<string, string> = {
     high: "bg-red-500",
     medium: "bg-orange-400",
@@ -133,6 +146,7 @@ const Tasks = ({ tasks, setTasks, currentTask }: TaskProps): JSX.Element => {
             tasks={tasks}
             setTasks={setTasks}
             onEditTask={handleEditTask}
+            onDeleteTask={handleDeleteTask}
           />
         ) : (
           <div className="border border-gray-300 text-sm text-gray-500 h-[370px] flex items-center justify-center rounded-md">
@@ -149,6 +163,7 @@ const Tasks = ({ tasks, setTasks, currentTask }: TaskProps): JSX.Element => {
               tasks={tasks}
               setTasks={setTasks}
               onEditTask={handleEditTask}
+              onDeleteTask={handleDeleteTask}
               isCompletedTasks={true}
             />
           ) : (
