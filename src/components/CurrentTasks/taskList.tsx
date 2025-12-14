@@ -1,4 +1,4 @@
-import { Clock, Pencil } from "lucide-react";
+import { Clock, Pencil, Trash2 } from "lucide-react";
 import { TaskData } from "../../types";
 
 interface TaskListProps {
@@ -7,10 +7,11 @@ interface TaskListProps {
   setTasks: (tasksToShow: TaskData[]) => void;
   tasks: TaskData[];
   onEditTask: (task: TaskData) => void;
+  onDeleteTask: (taskId: string) => void;
   isCompletedTasks?: boolean;
 }
 
-const TaskList = ({ tasksToShow, priorityColors, tasks, setTasks, onEditTask, isCompletedTasks }: TaskListProps) => {
+const TaskList = ({ tasksToShow, priorityColors, tasks, setTasks, onEditTask, onDeleteTask, isCompletedTasks }: TaskListProps) => {
   if (!tasksToShow?.length) return null;
 
   const handleTaskStatus = async (taskToUpdate: TaskData) => {
@@ -44,6 +45,10 @@ const TaskList = ({ tasksToShow, priorityColors, tasks, setTasks, onEditTask, is
     onEditTask(task);
   };
 
+  const handleDeleteTask = (taskId: string) => {
+    onDeleteTask(taskId);
+  };
+
   return (
     <div className="border border-gray-300 h-[365px] rounded-md overflow-y-auto shadow-[inset_0px_4px_6px_rgba(0,0,0,0.1),inset_0px_-4px_6px_rgba(0,0,0,0.1)]">
       {tasksToShow.map((task) => (
@@ -72,6 +77,12 @@ const TaskList = ({ tasksToShow, priorityColors, tasks, setTasks, onEditTask, is
               className="sm:mr-1 text-gray-500 cursor-pointer hover:text-gray-600 hover:scale-105"
               size={18}
               onClick={() => handleEditTask(task)}
+            />
+            <Trash2
+              data-testid="delete-task"
+              className="sm:mr-1 text-gray-500 cursor-pointer hover:text-red-500 hover:scale-105"
+              size={18}
+              onClick={() => handleDeleteTask(task.id)}
             />
             <div
               data-testid="priority-indicator"
