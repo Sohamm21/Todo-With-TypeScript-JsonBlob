@@ -150,7 +150,10 @@ const TasksModal = ({ onModalClose, onSave, taskToEdit, error, isLoading }: Task
           <button
             className="bg-[#646cff] rounded-md px-3 py-2 w-15 justify-center text-white hover:bg-[#535bf2] font-semibold cursor-pointer flex items-center gap-1 disabled:opacity-50 disabled:cursor-not-allowed"
             onClick={() => {
-              onSave(formData);
+              onSave({
+                ...formData,
+                title: formData.title.trim(),
+              });
             }}
             disabled={isLoading}
           >
